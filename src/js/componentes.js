@@ -15,6 +15,12 @@ const cleanHTML = () => {
     while( listTweets.firstChild ) { listTweets.removeChild( listTweets.firstChild ); }
 }
 
+// Elimina un tweet por su id
+const deleteTweet = id => {
+    tweets = tweets.filter( tweet => tweet.id !== id );
+    createHTML();
+}
+
 // Crea el HTML de la lista de tweets
 const createHTML = () => {
     cleanHTML();
@@ -24,6 +30,7 @@ const createHTML = () => {
             const btnDelete = document.createElement( 'a' );
             btnDelete.classList.add( 'borrar-tweet' );
             btnDelete.textContent = 'X';
+            btnDelete.onclick = () => { deleteTweet( id ); }
 
             const li = document.createElement( 'li' );
             li.textContent = tweet;
