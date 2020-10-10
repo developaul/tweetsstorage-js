@@ -15,6 +15,24 @@ const cleanHTML = () => {
     while( listTweets.firstChild ) { listTweets.removeChild( listTweets.firstChild ); }
 }
 
+// Muestra un mensaje de error en pantalla 
+const showError = ( message ) => {
+    const messageP = document.createElement( 'p' );
+    messageP.textContent = message;
+    messageP.classList.add( 'error' );
+
+    const content = document.querySelector( '#contenido' );
+
+    if( content.childElementCount === 1 ) {
+        content.appendChild( messageP );
+        
+        setTimeout( () => {
+            messageP.remove();
+        }, 3000 );
+    }
+
+}
+
 // Elimina un tweet por su id
 const deleteTweet = id => {
     tweets = tweets.filter( tweet => tweet.id !== id );
@@ -49,7 +67,7 @@ const addTweet = ( event ) => {
     const tweet = form.querySelector( '#tweet' ).value;
 
     if( tweet === '' ) {
-        console.log( 'Un mensaje no puede ir vacío' );
+        showError( 'Un mensaje no puede ir vacío' );
         return;
     }
 
