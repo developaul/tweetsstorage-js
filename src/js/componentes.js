@@ -15,6 +15,11 @@ const cleanHTML = () => {
     while( listTweets.firstChild ) { listTweets.removeChild( listTweets.firstChild ); }
 }
 
+// sincroniza el local storage
+const syncLocalStorage = () => {
+    localStorage.setItem( 'tweets', JSON.stringify( tweets ) );
+}
+
 // Muestra un mensaje de error en pantalla 
 const showError = ( message ) => {
     const messageP = document.createElement( 'p' );
@@ -30,7 +35,6 @@ const showError = ( message ) => {
             messageP.remove();
         }, 3000 );
     }
-
 }
 
 // Elimina un tweet por su id
@@ -58,6 +62,7 @@ const createHTML = () => {
         });
     }
 
+    syncLocalStorage();
 }
 
 // Agrega un nuevo tweet al array de tweets
@@ -85,4 +90,9 @@ const addTweet = ( event ) => {
 // Events
 export const startEventListeners = () => {
     form.addEventListener( 'submit', addTweet );
+
+    document.addEventListener( 'DOMContentLoaded', () => {
+        tweets = JSON.parse( localStorage.getItem( 'tweets' ) ) || [] ;
+        createHTML();
+    });
 }
