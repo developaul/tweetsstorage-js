@@ -2,12 +2,39 @@ import '../css/normalize.css';
 import '../css/skeleton.css';
 
 // References
-const form = document.querySelector( '#formulario' );
+const form          = document.querySelector( '#formulario' ),
+      listTweets    = document.querySelector( '#lista-tweets' );
 
 let tweets = [];
 
 
+
 // Functions
+// Limpia el HTML de la lista de tweets
+const cleanHTML = () => {
+    while( listTweets.firstChild ) { listTweets.removeChild( listTweets.firstChild ); }
+}
+
+// Crea el HTML de la lista de tweets
+const createHTML = () => {
+    cleanHTML();
+
+    if( tweets.length > 0 ) {
+        tweets.forEach( ( { tweet, id } ) => {
+            const btnDelete = document.createElement( 'a' );
+            btnDelete.classList.add( 'borrar-tweet' );
+            btnDelete.textContent = 'X';
+
+            const li = document.createElement( 'li' );
+            li.textContent = tweet;
+            li.appendChild( btnDelete );
+
+            listTweets.appendChild( li );
+        });
+    }
+
+}
+
 // Agrega un nuevo tweet al array de tweets
 const addTweet = ( event ) => {
     event.preventDefault();
@@ -23,11 +50,10 @@ const addTweet = ( event ) => {
 
     tweets = [ ...tweets, tweetObj ];
 
-    // crearHTML();
+    createHTML();
 
     form.reset();
 }
-
 
 
 
